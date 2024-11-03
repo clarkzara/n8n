@@ -21,6 +21,14 @@ RUN set -eux; \
 	rm -rf /usr/local/lib/node_modules/n8n/node_modules/n8n-editor-ui/node_modules && \
 	find /usr/local/lib/node_modules/n8n -type f -name "*.ts" -o -name "*.js.map" -o -name "*.vue" | xargs rm -f && \
 	rm -rf /root/.npm
+ 
+# Install Python and pip
+USER root
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip
+
+# Install pinecone-client
+RUN pip3 install pinecone-client
 
 # Setup the Task Runner Launcher
 ARG TARGETPLATFORM
