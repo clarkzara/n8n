@@ -27,8 +27,14 @@ USER root
 RUN apt-get update && \
     apt-get install -y python3 python3-pip
 
-# Install pinecone-client
-RUN pip3 install pinecone-client
+# Create and activate a virtual environment
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Install pinecone-client in the virtual environment and log installed packages
+RUN pip install pinecone-client && \
+    echo "Installed Python packages:" && \
+    pip list
 
 # Setup the Task Runner Launcher
 ARG TARGETPLATFORM
